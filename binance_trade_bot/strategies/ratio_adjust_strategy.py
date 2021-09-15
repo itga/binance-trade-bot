@@ -132,14 +132,14 @@ class Strategy(AutoTrader):
 
                 new_ratio = (pair.ratio * self.config.RATIO_ADJUST_WEIGHT + from_coin_price / to_coin_price)  / (self.config.RATIO_ADJUST_WEIGHT + 1)
 
-                self.logger.info(f"re-initialize: update ratio for pair {pair.from_coin} {pair.to_coin} from {pair.ratio} to {new_ratio}", notification=False)
+                # self.logger.info(f"re-initialize: update ratio for pair {pair.from_coin} {pair.to_coin} from {pair.ratio} to {new_ratio}", notification=False)
 
                 pair.ratio = new_ratio
                 pair.from_coin_price = from_coin_price
                 pair.to_coin_price = to_coin_price
 
-        stacktrace = traceback.format_stack()
-        self.logger.info(f"stacktrace: {stacktrace}")
+        # stacktrace = traceback.format_stack()
+        # self.logger.info(f"stacktrace: {stacktrace}")
 
     def initialize_trade_thresholds(self):
         """
@@ -184,8 +184,8 @@ class Strategy(AutoTrader):
                     if to_coin_symbol not in price_history.keys():
                         price_history[to_coin_symbol] = []
                         for result in self.manager.binance_client.get_historical_klines(f"{to_coin_symbol}{self.config.BRIDGE_SYMBOL}", "1m", start_date_str, end_date_str, limit=init_weight*2):
-                           price = float(result[1])
-                           price_history[to_coin_symbol].append(price)
+                            price = float(result[1])
+                            price_history[to_coin_symbol].append(price)
 
                     while len(price_history[from_coin_symbol]) < init_weight*2:
                         price_history[from_coin_symbol].insert(0, sum(price_history[from_coin_symbol]) / len(price_history[from_coin_symbol]))
